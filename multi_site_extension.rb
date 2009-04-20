@@ -18,12 +18,13 @@ class MultiSiteExtension < Radiant::Extension
   end
 
   def activate
+    require 'multi_site/route_extensions'
+    require 'multi_site/route_set_extensions'
     Page.send :include, MultiSite::PageExtensions
     SiteController.send :include, MultiSite::SiteControllerExtensions
     Admin::PagesController.send :include, MultiSite::PagesControllerExtensions
     ResponseCache.send :include, MultiSite::ResponseCacheExtensions
     Radiant::Config["dev.host"] = 'preview' if Radiant::Config.table_exists?
-    # Add site navigation
     admin.pages.index.add :top, "site_subnav"
     admin.tabs.add "Sites", "/admin/sites", :visibility => [:admin]
   end
