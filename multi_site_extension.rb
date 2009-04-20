@@ -18,8 +18,8 @@ class MultiSiteExtension < Radiant::Extension
   end
 
   def activate
-    require 'multi_site/route_extensions'
-    require 'multi_site/route_set_extensions'
+    ActionController::Routing::Route.extend MultiSite::RouteExtensions
+    ActionController::Routing::RouteSet.extend MultiSite::RouteSetExtensions
     Page.send :include, MultiSite::PageExtensions
     SiteController.send :include, MultiSite::SiteControllerExtensions
     Admin::PagesController.send :include, MultiSite::PagesControllerExtensions
